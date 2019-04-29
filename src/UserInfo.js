@@ -4,6 +4,7 @@ import styled from 'styled-components';
 const avatarSquare = 50;
 
 const UserInfoStyled = styled.div`
+  grid-area: user;
   padding 25px 0;
   text-align: center;
 `

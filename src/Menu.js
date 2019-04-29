@@ -33,6 +33,8 @@ const StyledMenu = styled.div`
 `
 
 const Header = styled.div`
+  grid-area: header;
+  
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -74,6 +76,7 @@ class MenuHeader extends Component {
 }
 
 const Footer = styled.div`
+  grid-area: footer;
   padding: 20px 0 5px 0;
   margin: 0 15px;
   
