@@ -13,7 +13,7 @@ const designM = '700px';
 
 const StyledMenu = styled.div`
   display: ${props => (props.visible) ? `grid` : `none`  };
-  grid-template-rows: auto auto auto auto;
+  grid-template-rows: max-content;
   grid-template-columns: auto;
   grid-template-areas: 
     "header"
@@ -36,12 +36,12 @@ const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  
+
   padding: 20px 0;
   margin: 0 15px;
-  
+
   border-bottom: 2px solid ${borderColor};
-  
+
   i {
     cursor: pointer;
     font-size: 1.15rem;
@@ -92,6 +92,9 @@ const Footer = styled.div`
   }
 `
 
+const OpenMenuButton = styled.div`
+background: black; height: 13px;`
+
 class MenuFooter extends Component {
   render() {
     const contactUsLabel = `We're here to help`; // possible translation change here?
@@ -137,7 +140,7 @@ class Menu extends Component {
   render() {
     return (
       <div>
-        <div onClick={this.toggleVisibility}>Menu</div>
+        <OpenMenuButton onClick={this.toggleVisibility}>--</OpenMenuButton>
         <StyledMenu visible={this.state.visible}>
           <MenuHeader toggleVisibility={this.toggleVisibility}/>
           <UserInfo />
