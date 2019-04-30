@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
+import { formatMoney, getUserData } from './utils';
+
 const avatarSquare = 55;
 
 const UserInfoStyled = styled.div`
@@ -42,7 +44,7 @@ class UserInfo extends Component {
   }
   
   componentDidMount() {
-    const userData = getData();
+    const userData = getUserData();
     
     this.setState(userData);
   }
@@ -56,19 +58,11 @@ class UserInfo extends Component {
         <UserInfoName>{this.state.name}</UserInfoName>
         <UserInfoBalance>
           <div>{balanceLabel}</div>
-          <div>{this.state.balance}</div>
+          <div>{formatMoney(this.state.balance)}</div>
         </UserInfoBalance>
       </UserInfoStyled>
     )
   }
 }
 
-export default UserInfo; 
-
-function getData() {
-  return {
-    name: 'Dominik',
-    balance: '£1,500.00',
-    avatar: 'https://cdn1.iconfinder.com/data/icons/animal-face-avatars-1/90/2-128.png'
-  }
-}
+export default UserInfo;
