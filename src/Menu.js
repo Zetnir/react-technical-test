@@ -33,7 +33,16 @@ const StyledMenu = styled.div`
     text-decoration: none;
   }
   
-  @media (min-width: ${sizes.tablet}) {}
+  @media (min-width: ${sizes.tablet}px) {
+    grid-gap: 15px;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: max-content 1fr 1fr 3fr;
+    grid-template-areas: 
+      "header header header"
+      "menu user ."
+      "menu submenu ."
+      "footer footer footer";
+  }
 `
 
 const Header = styled.div`
@@ -58,7 +67,7 @@ const Header = styled.div`
     font-size: 1.2rem;
   }
   
-  @media (min-width: ${sizes.tablet}) {
+  @media (min-width: ${sizes.tablet}px) {
     border-bottom: 3px solid #FFF;
   }
 `
@@ -97,7 +106,7 @@ const Footer = styled.div`
   
   .menu--footer__contact-data { display: none; }
   
-  @media (min-width: ${sizes.tablet}) {
+  @media (min-width: ${sizes.tablet}px) {
     font-size: 1.15rem;
     padding: 15px 0 50px 0;
 
@@ -144,7 +153,23 @@ const MenuListItemStyled = styled.div`
   /* first item has no border*/
   &.menu-item__name-profile {
     padding-top: 0;
-    border-top: 0;
+    border-top-width: 0;
+  }
+  
+  @media (min-width: ${sizes.tablet}px) {
+    display: ${props => props.order.desktop === -1 ? 'none' : 'block'};
+    border: 0;
+    padding: 0;
+    
+    order: ${props => props.order.desktop};
+    
+    i {
+      display: none;
+    }
+    
+    &.menu-item__name-flights {
+      margin-bottom: 15px;
+    }
   }
 `
 
@@ -163,11 +188,15 @@ class MenuListItem extends Component {
 }
 
 const MenuListStyled = styled.div`
-  grid-area: menu;
+  grid-area: ${props => props.type === 'sub' ? 'submenu' : 'menu'};
   margin: 0 20px;
   
-  display: flex;
+  display: ${props => props.type === 'sub' ? 'none' : 'flex'}
   flex-direction: column;
+  
+  @media (min-width: ${sizes.tablet}px) {
+    display: ${props => props.type === 'sub' && 'flex'}
+  }
 `
 
 class MenuList extends Component {
@@ -181,16 +210,26 @@ class MenuList extends Component {
       { name: 'support', label: 'Support', link: '#', icon: 'fa-life-ring', group: 2, order: { tablet: 3, desktop: 0 } },
       { name: 'contact', label: 'Contact Us', link: '#', icon: 'fa-phone', group: 2, order: { tablet: 4, desktop: 0 } },
       
-      { name: 'profile', label: 'Profile', link: '#', icon: 'fa-user-circle', group: 3, order: { tablet: 0, desktop: 0 } },
-      { name: 'bookings', label: 'My Bookings', link: '#', icon: 'fa-plane', group: 3, order: { tablet: 1, desktop: 0 } },
-      { name: 'payments', label: 'My Payments', link: '#', icon: 'fa-credit-card', group: 3, order: { tablet: 2, desktop: 0 } },
-      { name: 'logout', label: 'Log Out', link: '#', icon: 'fa-sign-out-alt', group: 3, order: { tablet: 5, desktop: 0 } },
-      { name: 'resume', label: 'Resume Application', link: '#', icon: '', group: 3, order: { tablet: -1, desktop: 0 } }
+      { name: 'profile', label: 'Profile', link: '#', icon: 'fa-user-circle', group: 3, order: { tablet: 0, desktop: -1 } },
+      { name: 'bookings', label: 'My Bookings', link: '#', icon: 'fa-plane', group: 3, order: { tablet: 1, desktop: -1 } },
+      { name: 'payments', label: 'My Payments', link: '#', icon: 'fa-credit-card', group: 3, order: { tablet: 2, desktop: -1 } },
+      { name: 'logout', label: 'Log Out', link: '#', icon: 'fa-sign-out-alt', group: 3, order: { tablet: 5, desktop: -1 } },
+      { name: 'resume', label: 'Resume Application', link: '#', icon: '', group: 3, order: { tablet: -1, desktop: -1 } }
     ];
+    
+    const subMenuListItems = [
+      { name: 'profile', label: 'Profile', link: '#', icon: 'fa-user-circle', group: 3, order: { tablet: -1, desktop: 0 } },
+      { name: 'bookings', label: 'My Bookings', link: '#', icon: 'fa-plane', group: 3, order: { tablet: -1, desktop: 0 } },
+      { name: 'payments', label: 'My Payments', link: '#', icon: 'fa-credit-card', group: 3, order: { tablet: -1, desktop: 0 } },
+      { name: 'logout', label: 'Log Out', link: '#', icon: 'fa-sign-out-alt', group: 3, order: { tablet: -1, desktop: 0 } },
+      { name: 'resume', label: 'Resume Application', link: '#', icon: '', group: 3, order: { tablet: -1, desktop: 0 } }
+    ]
+    
+    let list = this.props.type === 'sub' ? subMenuListItems : menuListItems;
 
     return (
-      <MenuListStyled>
-        {menuListItems.map((itemData, index) => {
+      <MenuListStyled type={this.props.type}>
+        {list.map((itemData, index) => {
           return <MenuListItem item={itemData} key={index}/>
         })}
       </MenuListStyled>
@@ -220,6 +259,7 @@ class Menu extends Component {
           <MenuHeader toggleVisibility={this.toggleVisibility}/>
           <UserInfo />
           <MenuList />
+          <MenuList type={'sub'}/>
           <MenuFooter />
         </StyledMenu>
       </div>

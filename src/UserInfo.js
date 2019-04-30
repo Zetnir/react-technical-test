@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import { formatMoney, getUserData } from './utils';
+import { sizes, formatMoney, getUserData } from './utils';
 
 const avatarSquare = 55;
 
@@ -9,6 +9,10 @@ const UserInfoStyled = styled.div`
   grid-area: user;
   padding-top: 30px;
   text-align: center;
+  
+  @media (min-width: ${sizes.tablet}px) {
+    padding-top: 0;
+  }
 `
 
 const UserInfoAvatart = styled.img`
