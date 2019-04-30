@@ -7,6 +7,27 @@ export const sizes = {
   phone: 576
 };
 
+export const theme = {
+  color: {
+    main: '#EE5F63',
+    text: '#FFF',
+    border: '#FFF',
+    borderDim: '#F18990'
+  }
+}
+
+export const slideIn = keyframes`
+  from {
+    top: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+`;
+
+/**
+ *
+ */
 export function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",", currency = '£') {
   try {
     decimalCount = Math.abs(decimalCount);
@@ -23,6 +44,9 @@ export function formatMoney(amount, decimalCount = 2, decimal = ".", thousands =
   }
 };
 
+/**
+ *
+ */
 export function getUserData() {
   return {
     name: 'Dominik',
@@ -31,12 +55,3 @@ export function getUserData() {
     avatar: avatar
   }
 }
-
-export const slideIn = keyframes`
-  from {
-    top: translateY(0);
-  }
-  to {
-    transform: translateY(100%);
-  }
-`;

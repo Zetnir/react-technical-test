@@ -1,36 +1,30 @@
+// external components
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
 
-import { sizes, slideIn } from './utils';
-
+// internal components
 import UserInfo from './UserInfo';
 
+// utilities
+import { sizes, slideIn, theme } from './utils';
 import logo from './images/awaymoFullWhite.svg';
 
-const mainColor = '#EE5F63';
-const textColor = '#FFF';
-const borderColor = '#F18990';
+// 
+const animationTime = 1000;
 
 const StyledMenu = styled.div`
   position: fixed;
   top: -100%;
+  
+  display: ${props => (props.visible) ? `grid` : `none` };
   width: 100%;
   min-width: 330px;
   height: 100%;
-  
-  &.slide-appear,
-  &.slide-enter {
-    animation: ${slideIn} infinite 1s ease-out;
-  }
-  
-  &.slide-exit {
-    animation: ${slideIn} infinite 1s ease-in;
-    animation-direction: reverse;
-  }
 
-  /* display: ${props => (props.visible) ? `grid` : `none` }; */
-  display: grid;
+  color: ${theme.color.text};
+  background: ${theme.color.main};
+
   grid-template-rows: max-content;
   grid-template-columns: auto;
   grid-template-areas: 
@@ -39,16 +33,28 @@ const StyledMenu = styled.div`
     "menu"
     "footer";
   
-  color: ${textColor};
-  background: ${mainColor};
-  
   a {
-    color: ${textColor}
+    color: ${theme.color.text}
     text-decoration: none;
+  }
+  
+  &.slide-enter {
+    animation: ${slideIn} infinite ${animationTime}ms ease-out;
   }
   
   &.slide-enter-done {
     top: 0;
+  }
+  
+  &.slide-exit {
+    display: grid;
+    
+    animation: ${slideIn} infinite ${animationTime}ms ease-in;
+    animation-direction: reverse;
+  }
+  
+  &.slide-exit-done {
+    display: none;
   }
   
   @media (min-width: ${sizes.tablet}px) {
@@ -70,10 +76,10 @@ const Header = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  padding: 20px 0; /* height is 81px */
-  margin: 0 20px;
+  padding: 15px 0;
+  margin: 0 15px;
 
-  border-bottom: 1px solid ${borderColor};
+  border-bottom: 1px solid ${theme.color.borderDim};
 
   img {
     height: 25px;
@@ -86,7 +92,7 @@ const Header = styled.div`
   }
   
   @media (min-width: ${sizes.tablet}px) {
-    border-bottom: 3px solid #FFF;
+    border-bottom: 3px solid ${theme.color.border};
   }
 `
 
@@ -116,7 +122,7 @@ const Footer = styled.div`
   padding: 20px 0 5px 0;
   margin: 0 20px;
   
-  border-top: 1px solid ${borderColor}
+  border-top: 1px solid ${theme.color.borderDim}
   
   text-align: center;
   font-size: 1.35rem;
@@ -161,7 +167,7 @@ const MenuListItemStyled = styled.div`
   align-items: center;
   order: ${props => props.order.tablet};
   
-  border-top: 1px solid ${borderColor};
+  border-top: 1px solid ${theme.color.borderDim};
   
   i {
     font-size: 1.1rem;
@@ -248,7 +254,7 @@ class MenuList extends Component {
       { name: 'resume', label: 'Resume Application', link: '#', icon: '', group: 3, order: { tablet: -1, desktop: 0 } }
     ]
     
-    let list = this.props.type === 'sub' ? subMenuListItems : menuListItems;
+    const list = this.props.type === 'sub' ? subMenuListItems : menuListItems;
 
     return (
       <MenuListStyled type={this.props.type}>
@@ -281,7 +287,6 @@ class Menu extends Component {
         <OpenMenuButton onClick={this.toggleVisibility}><i className="fas fa-bars"></i></OpenMenuButton>
         <CSSTransition
           in={this.state.visible}
-          appear={true}
           timeout={1000}
           classNames="slide"
         >

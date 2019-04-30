@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import { sizes, formatMoney, getUserData } from './utils';
-
-const avatarSquare = 35;
-const borderColor = '#F18990';
-const mainColor = '#EE5F63';
+import { theme, sizes, formatMoney, getUserData } from './utils';
 
 const UserInfoStyled = styled.div`
   grid-area: user;
@@ -14,7 +10,7 @@ const UserInfoStyled = styled.div`
   
   @media (min-width: ${sizes.tablet}px) {
     padding: 0 0 10px 0;
-    border-bottom: 1px solid ${borderColor};
+    border-bottom: 1px solid ${theme.color.border};
     text-align: left;
     
     display: grid;
@@ -32,15 +28,15 @@ const UserInfoAvatart = styled.div`
   background: #fff;
   
   img {
-    width: ${avatarSquare}px;
-    height: ${avatarSquare}px;
+    width: 35px;
+    height: 35px;
   }
   
   @media (min-width: ${sizes.tablet}px) {
     padding: 3px;
     
     img {
-      border: 1.5px solid ${mainColor};
+      border: 1.5px solid ${theme.color.main};
       border-radius: 50%;
       padding: 8px;
       
