@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { CSSTransition } from 'react-transition-group';
 
 import { sizes } from './utils';
 
@@ -13,11 +14,13 @@ const borderColor = '#F18990';
 
 const StyledMenu = styled.div`
   position: fixed;
+  top: -100%;
   width: 100%;
   min-width: 330px;
   height: 100%;
 
-  display: ${props => (props.visible) ? `grid` : `none` };
+  /* display: ${props => (props.visible) ? `grid` : `none` }; */
+  display: grid;
   grid-template-rows: max-content;
   grid-template-columns: auto;
   grid-template-areas: 
@@ -32,6 +35,10 @@ const StyledMenu = styled.div`
   a {
     color: ${textColor}
     text-decoration: none;
+  }
+  
+  &.slide-enter-done {
+    top: 0;
   }
   
   @media (min-width: ${sizes.tablet}px) {
@@ -259,13 +266,21 @@ class Menu extends Component {
   render() {
     return (
       <div>
-        <StyledMenu visible={this.state.visible}>
-          <MenuHeader toggleVisibility={this.toggleVisibility}/>
-          <UserInfo />
-          <MenuList />
-          <MenuList type={'sub'}/>
-          <MenuFooter />
-        </StyledMenu>
+        <OpenMenuButton onClick={this.toggleVisibility}>--</OpenMenuButton>
+        <CSSTransition
+          in={this.state.visible}
+          appear={true}
+          timeout={1000}
+          classNames="slide"
+        >
+            <StyledMenu visible={this.state.visible}>
+              <MenuHeader toggleVisibility={this.toggleVisibility}/>
+              <UserInfo />
+              <MenuList />
+              <MenuList type={'sub'}/>
+              <MenuFooter />
+            </StyledMenu>
+        </CSSTransition>
       </div>
     )
   }
@@ -273,4 +288,4 @@ class Menu extends Component {
 
 export default Menu; 
 
-// <OpenMenuButton onClick={this.toggleVisibility}>--</OpenMenuButton>
+// 

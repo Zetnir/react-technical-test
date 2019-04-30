@@ -23,11 +23,21 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
+@keyframes slideIn {
   from {
-    transform: rotate(0deg);
+    top: translateY(0);
   }
   to {
-    transform: rotate(360deg);
+    transform: translateY(100%);
   }
+}
+
+.slide-appear,
+.slide-enter {
+  animation: slideIn infinite 1s ease-out;
+}
+
+.slide-exit {
+  animation: slideIn infinite 1s ease-in;
+  animation-direction: reverse;
 }
