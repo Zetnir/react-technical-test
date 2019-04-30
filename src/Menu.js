@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
+import { sizes } from './utils';
+
 import UserInfo from './UserInfo';
 
 import logo from './awaymoFullWhite.svg';
@@ -8,8 +10,6 @@ import logo from './awaymoFullWhite.svg';
 const mainColor = '#EE5F63';
 const textColor = '#FFF';
 const borderColor = '#F18990';
-
-const designM = '700px';
 
 const StyledMenu = styled.div`
   display: ${props => (props.visible) ? `grid` : `none`  };
@@ -29,7 +29,7 @@ const StyledMenu = styled.div`
     text-decoration: none;
   }
   
-  @media (min-width: 700px) {}
+  @media (min-width: ${sizes.tablet}) {}
 `
 
 const Header = styled.div`
@@ -42,14 +42,14 @@ const Header = styled.div`
   padding: 20px 0;
   margin: 0 15px;
 
-  border-bottom: 2px solid ${borderColor};
+  border-bottom: 1px solid ${borderColor};
 
   i {
     cursor: pointer;
     font-size: 1.15rem;
   }
   
-  @media (min-width: ${designM}) {
+  @media (min-width: ${sizes.tablet}) {
     border-bottom: 3px solid #FFF;
   }
 `
@@ -87,7 +87,7 @@ const Footer = styled.div`
   
   .menu--footer__contact-data { display: none; }
   
-  @media (min-width: ${designM}) {
+  @media (min-width: ${sizes.tablet}) {
     font-size: 1.15rem;
     padding: 15px 0 50px 0;
 
@@ -114,15 +114,75 @@ class MenuFooter extends Component {
   }
 }
 
+const MenuListItemStyled = styled.div`
+  height: 70px;
+  
+  font-size: 1.25rem;
+  
+  display: ${props => props.order.tablet === -1 ? 'none' : 'flex'};
+  align-items: center;
+  order: ${props => props.order.tablet};
+  
+  border-top: 1px solid ${borderColor}
+  
+  &:first-child {
+    border-top: 0;
+  }
+  
+  i {
+    font-size: 1.25rem;
+    margin-right: 15px;
+  }
+`
+
 class MenuListItem extends Component {
   render() {
-    return <div>MenuListItem</div>
+    const item = this.props.item;
+    return (
+      <MenuListItemStyled group={item.group} order={item.order}>
+        <a href={item.link} alt={item.name}>
+          <i className={`fas ${item.icon}`} />
+          <span>{item.label}</span>
+        </a>
+      </MenuListItemStyled>
+    )
   }
 }
 
+const MenuListStyled = styled.div`
+  grid-area: menu;
+  margin: 0 15px;
+  
+  display: flex;
+  flex-direction: column;
+`
+
 class MenuList extends Component {
   render() {
-    return <MenuListItem />
+    const menuListItems = [
+      { name: 'home', label: 'Home', link: '#', icon: '', group: 1, order: { tablet: -1, desktop: 0 } },
+      { name: 'flights', label: 'Flights', link: '#', icon: '', group: 1, order: { tablet: -1, desktop: 0 } },
+      
+      { name: 'about', label: 'About Us', link: '#', icon: 'fa-question-circle', group: 2, order: { tablet: 6, desktop: 0 } },
+      { name: 'faq', label: 'FAQ', link: '#', icon: 'fa-info-circle', group: 2, order: { tablet: 7, desktop: 0 } },
+      { name: 'support', label: 'Support', link: '#', icon: 'fa-life-ring', group: 2, order: { tablet: 3, desktop: 0 } },
+      { name: 'contact', label: 'Contact Us', link: '#', icon: 'fa-phone', group: 2, order: { tablet: 4, desktop: 0 } },
+      
+      { name: 'profile', label: 'Profile', link: '#', icon: 'fa-user-circle', group: 3, order: { tablet: 0, desktop: 0 } },
+      { name: 'bookings', label: 'My Bookings', link: '#', icon: 'fa-plane', group: 3, order: { tablet: 1, desktop: 0 } },
+      { name: 'payments', label: 'My Payments', link: '#', icon: 'fa-credit-card', group: 3, order: { tablet: 2, desktop: 0 } },
+      { name: 'logout', label: 'Log Out', link: '#', icon: 'fa-sign-out-alt', group: 3, order: { tablet: 5, desktop: 0 } },
+      { name: 'resume', label: 'Resume Application', link: '#', icon: '', group: 3, order: { tablet: -1, desktop: 0 } }
+    ];
+
+    return (
+      <MenuListStyled>
+        {menuListItems.map((itemData, index) => {
+          return <MenuListItem item={itemData} key={index}/>
+        })}
+      </MenuListStyled>
+    );
+    
   }
 }
 
