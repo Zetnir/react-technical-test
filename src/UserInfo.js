@@ -52,7 +52,7 @@ const UserInfoDetails = styled.div`
 `
 
 const UserInfoName = styled.div`
-  font-size: 1.35rem;
+  font-size: 1.15rem;
   font-weight: 400;
   
   span:last-child { display: none; }
@@ -67,11 +67,11 @@ const UserInfoName = styled.div`
 
 const UserInfoBalance = styled.div`
   div:first-child {
-    font-size: 1.1rem;
+    /* font-size: 1rem; */
   }
   
   .user-info__balance {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     font-weight: 400;
   }
   

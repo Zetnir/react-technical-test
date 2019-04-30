@@ -60,13 +60,13 @@ const Header = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  padding: 25px 0; /* height is 81px */
+  padding: 20px 0; /* height is 81px */
   margin: 0 20px;
 
   border-bottom: 1px solid ${borderColor};
 
   img {
-    height: 30px;
+    height: 25px;
     margin-right: -38px;
   }
 
@@ -143,9 +143,9 @@ class MenuFooter extends Component {
 
 const MenuListItemStyled = styled.div`
   /* height: 70px; */
-  padding: 21px 0;
+  padding: 15px 0;
   
-  font-size: 1.25rem;
+  font-size: 1rem;
   
   display: ${props => props.order.tablet === -1 ? 'none' : 'flex'};
   align-items: center;
@@ -154,7 +154,7 @@ const MenuListItemStyled = styled.div`
   border-top: 1px solid ${borderColor};
   
   i {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     margin-right: 10px;
   }
   
