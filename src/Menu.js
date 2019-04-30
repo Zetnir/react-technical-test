@@ -14,6 +14,7 @@ const borderColor = '#F18990';
 const StyledMenu = styled.div`
   position: fixed;
   width: 100%;
+  min-width: 330px;
   height: 100%;
 
   display: ${props => (props.visible) ? `grid` : `none` };

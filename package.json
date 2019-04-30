@@ -29,6 +29,7 @@
     ]
   },
   "devDependencies": {
+    "react-transition-group": "^4.0.0",
     "styled-components": "^4.2.0"
   }
 }
