@@ -3,8 +3,9 @@ import styled from 'styled-components';
 
 import { sizes, formatMoney, getUserData } from './utils';
 
-const avatarSquare = 55;
+const avatarSquare = 35;
 const borderColor = '#F18990';
+const mainColor = '#EE5F63';
 
 const UserInfoStyled = styled.div`
   grid-area: user;
@@ -23,12 +24,26 @@ const UserInfoStyled = styled.div`
   }
 `
 
-const UserInfoAvatart = styled.img`
-  width: ${avatarSquare}px;
-  height: ${avatarSquare}px;
+const UserInfoAvatart = styled.div`
+
+  display: inline-flex;
+  border-radius: 50%;
+  padding: 5px;
+  background: #fff;
+  
+  img {
+    width: ${avatarSquare}px;
+    height: ${avatarSquare}px;
+  }
   
   @media (min-width: ${sizes.tablet}px) {
-
+    padding: 3px;
+    
+    img {
+      border: 2px solid ${mainColor};
+      border-radius: 50%;
+      padding: 8px;
+    }
   }
 `
 
@@ -105,7 +120,9 @@ class UserInfo extends Component {
     
     return (
       <UserInfoStyled>
-        <UserInfoAvatart src={this.state.avatar} />
+        <UserInfoAvatart>
+          <img src={this.state.avatar} />
+        </UserInfoAvatart>
         <UserInfoDetails>
           <UserInfoName><span>{this.state.name}</span>&nbsp;<span>{this.state.surname}</span></UserInfoName>
           <UserInfoBalance>

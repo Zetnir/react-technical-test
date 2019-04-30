@@ -1,3 +1,5 @@
+import avatar from './images/avatar.png';
+
 export const sizes = {
   desktop: 992,
   tablet: 768,
@@ -25,6 +27,6 @@ export function getUserData() {
     name: 'Dominik',
     surname: 'Biel',
     balance: 1500,
-    avatar: 'https://cdn1.iconfinder.com/data/icons/animal-face-avatars-1/90/2-128.png'
+    avatar: avatar
   }
 }

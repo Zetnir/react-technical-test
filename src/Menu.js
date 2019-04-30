@@ -6,7 +6,7 @@ import { sizes } from './utils';
 
 import UserInfo from './UserInfo';
 
-import logo from './awaymoFullWhite.svg';
+import logo from './images/awaymoFullWhite.svg';
 
 const mainColor = '#EE5F63';
 const textColor = '#FFF';
