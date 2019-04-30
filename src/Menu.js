@@ -16,7 +16,7 @@ const StyledMenu = styled.div`
   width: 100%;
   height: 100%;
 
-  display: ${props => (props.visible) ? `grid` : `none`  };
+  display: ${props => (props.visible) ? `grid` : `none` };
   grid-template-rows: max-content;
   grid-template-columns: auto;
   grid-template-areas: 
@@ -36,7 +36,7 @@ const StyledMenu = styled.div`
   @media (min-width: ${sizes.tablet}px) {
     grid-gap: 15px;
     grid-template-columns: 1fr 2fr 1fr;
-    grid-template-rows: max-content 1fr 1fr 3fr;
+    grid-template-rows: max-content max-content 1fr 3fr;
     grid-template-areas: 
       "header header header"
       "menu user ."
@@ -196,6 +196,9 @@ const MenuListStyled = styled.div`
   
   @media (min-width: ${sizes.tablet}px) {
     display: ${props => props.type === 'sub' && 'flex'}
+    margin: 0;
+    
+    font-weight: 500;
   }
 `
 

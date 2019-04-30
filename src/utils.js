@@ -23,6 +23,7 @@ export function formatMoney(amount, decimalCount = 2, decimal = ".", thousands =
 export function getUserData() {
   return {
     name: 'Dominik',
+    surname: 'Biel',
     balance: 1500,
     avatar: 'https://cdn1.iconfinder.com/data/icons/animal-face-avatars-1/90/2-128.png'
   }
