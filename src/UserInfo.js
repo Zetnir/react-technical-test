@@ -40,9 +40,12 @@ const UserInfoAvatart = styled.div`
     padding: 3px;
     
     img {
-      border: 2px solid ${mainColor};
+      border: 1.5px solid ${mainColor};
       border-radius: 50%;
       padding: 8px;
+      
+      width: 25px;
+      height: 25px;
     }
   }
 `

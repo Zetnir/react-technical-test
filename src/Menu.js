@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
 
-import { sizes } from './utils';
+import { sizes, slideIn } from './utils';
 
 import UserInfo from './UserInfo';
 
@@ -18,6 +18,16 @@ const StyledMenu = styled.div`
   width: 100%;
   min-width: 330px;
   height: 100%;
+  
+  &.slide-appear,
+  &.slide-enter {
+    animation: ${slideIn} infinite 1s ease-out;
+  }
+  
+  &.slide-exit {
+    animation: ${slideIn} infinite 1s ease-in;
+    animation-direction: reverse;
+  }
 
   /* display: ${props => (props.visible) ? `grid` : `none` }; */
   display: grid;
@@ -123,7 +133,10 @@ const Footer = styled.div`
 `
 
 const OpenMenuButton = styled.div`
-background: black; height: 13px;`
+  font-size: 2rem;
+  padding: 10px;
+  cursor: pointer;
+`
 
 class MenuFooter extends Component {
   render() {
@@ -142,10 +155,7 @@ class MenuFooter extends Component {
 }
 
 const MenuListItemStyled = styled.div`
-  /* height: 70px; */
   padding: 15px 0;
-  
-  font-size: 1rem;
   
   display: ${props => props.order.tablet === -1 ? 'none' : 'flex'};
   align-items: center;
@@ -170,6 +180,8 @@ const MenuListItemStyled = styled.div`
     padding: 0;
     
     order: ${props => props.order.desktop};
+    
+    font-size: 1.35rem;
     
     i {
       display: none;
@@ -253,7 +265,7 @@ class Menu extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: true
+      visible: false
     }
     
     this.toggleVisibility = this.toggleVisibility.bind(this);
@@ -266,7 +278,7 @@ class Menu extends Component {
   render() {
     return (
       <div>
-        <OpenMenuButton onClick={this.toggleVisibility}>--</OpenMenuButton>
+        <OpenMenuButton onClick={this.toggleVisibility}><i className="fas fa-bars"></i></OpenMenuButton>
         <CSSTransition
           in={this.state.visible}
           appear={true}

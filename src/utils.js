@@ -1,4 +1,5 @@
 import avatar from './images/avatar.png';
+import { keyframes } from 'styled-components';
 
 export const sizes = {
   desktop: 992,
@@ -30,3 +31,12 @@ export function getUserData() {
     avatar: avatar
   }
 }
+
+export const slideIn = keyframes`
+  from {
+    top: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+`;

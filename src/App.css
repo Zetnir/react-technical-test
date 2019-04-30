@@ -26,22 +26,3 @@ html {
 .App-link {
   color: #61dafb;
 }
-
-@keyframes slideIn {
-  from {
-    top: translateY(0);
-  }
-  to {
-    transform: translateY(100%);
-  }
-}
-
-.slide-appear,
-.slide-enter {
-  animation: slideIn infinite 1s ease-out;
-}
-
-.slide-exit {
-  animation: slideIn infinite 1s ease-in;
-  animation-direction: reverse;
-}
