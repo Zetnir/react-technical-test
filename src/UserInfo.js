@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-const avatarSquare = 50;
+const avatarSquare = 55;
 
 const UserInfoStyled = styled.div`
   grid-area: user;
-  padding 25px 0;
+  padding-top: 30px;
   text-align: center;
 `
 
@@ -15,11 +15,19 @@ const UserInfoAvatart = styled.img`
 `
 
 const UserInfoName = styled.div`
-
+  font-size: 1.35rem;
+  font-weight: 400;
 `
 
 const UserInfoBalance = styled.div`
-
+  div:first-child {
+    font-size: 1.1rem;
+  }
+  
+  div:last-child {
+    font-size: 1.3rem;
+    font-weight: 400;
+  }
 `
 
 class UserInfo extends Component {
@@ -60,7 +68,7 @@ export default UserInfo;
 function getData() {
   return {
     name: 'Dominik',
-    balance: 1500,
+    balance: '£1,500.00',
     avatar: 'https://cdn1.iconfinder.com/data/icons/animal-face-avatars-1/90/2-128.png'
   }
 }

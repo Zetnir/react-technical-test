@@ -12,6 +12,10 @@ const textColor = '#FFF';
 const borderColor = '#F18990';
 
 const StyledMenu = styled.div`
+  position: fixed;
+  width: 100%;
+  height: 100%;
+
   display: ${props => (props.visible) ? `grid` : `none`  };
   grid-template-rows: max-content;
   grid-template-columns: auto;
@@ -39,14 +43,19 @@ const Header = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  padding: 20px 0;
-  margin: 0 15px;
+  padding: 25px 0; /* height is 81px */
+  margin: 0 20px;
 
   border-bottom: 1px solid ${borderColor};
 
+  img {
+    height: 30px;
+    margin-right: -38px;
+  }
+
   i {
     cursor: pointer;
-    font-size: 1.15rem;
+    font-size: 1.2rem;
   }
   
   @media (min-width: ${sizes.tablet}) {
@@ -78,12 +87,13 @@ class MenuHeader extends Component {
 const Footer = styled.div`
   grid-area: footer;
   padding: 20px 0 5px 0;
-  margin: 0 15px;
+  margin: 0 20px;
   
   border-top: 1px solid ${borderColor}
   
   text-align: center;
   font-size: 1.35rem;
+  align-self: end;
   
   .menu--footer__contact-data { display: none; }
   
@@ -115,7 +125,8 @@ class MenuFooter extends Component {
 }
 
 const MenuListItemStyled = styled.div`
-  height: 70px;
+  /* height: 70px; */
+  padding: 21px 0;
   
   font-size: 1.25rem;
   
@@ -123,15 +134,17 @@ const MenuListItemStyled = styled.div`
   align-items: center;
   order: ${props => props.order.tablet};
   
-  border-top: 1px solid ${borderColor}
-  
-  &:first-child {
-    border-top: 0;
-  }
+  border-top: 1px solid ${borderColor};
   
   i {
     font-size: 1.25rem;
-    margin-right: 15px;
+    margin-right: 10px;
+  }
+  
+  /* first item has no border*/
+  &.menu-item__name-profile {
+    padding-top: 0;
+    border-top: 0;
   }
 `
 
@@ -139,7 +152,7 @@ class MenuListItem extends Component {
   render() {
     const item = this.props.item;
     return (
-      <MenuListItemStyled group={item.group} order={item.order}>
+      <MenuListItemStyled group={item.group} order={item.order} className={`menu-item__name-${item.name}`}>
         <a href={item.link} alt={item.name}>
           <i className={`fas ${item.icon}`} />
           <span>{item.label}</span>
@@ -151,7 +164,7 @@ class MenuListItem extends Component {
 
 const MenuListStyled = styled.div`
   grid-area: menu;
-  margin: 0 15px;
+  margin: 0 20px;
   
   display: flex;
   flex-direction: column;
@@ -203,7 +216,6 @@ class Menu extends Component {
   render() {
     return (
       <div>
-        <OpenMenuButton onClick={this.toggleVisibility}>--</OpenMenuButton>
         <StyledMenu visible={this.state.visible}>
           <MenuHeader toggleVisibility={this.toggleVisibility}/>
           <UserInfo />
@@ -216,3 +228,5 @@ class Menu extends Component {
 }
 
 export default Menu; 
+
+// <OpenMenuButton onClick={this.toggleVisibility}>--</OpenMenuButton>
