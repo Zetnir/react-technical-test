@@ -19,8 +19,6 @@ const UserInfoStyled = styled.div`
     display: grid;
     grid-gap: 15px;
     grid-template-columns: max-content auto;
-    grid-template-areas: 
-      "avatar details";
     align-items: center;
   }
 `
