@@ -1,18 +1,28 @@
 // external components
 import React, { Component } from 'react';
-import styled from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
+import styled from 'styled-components';
 
 // internal components
 import UserInfo from './UserInfo';
 
 // utilities
-import { sizes, slideIn, theme } from './utils';
+import { sizes, theme } from './utils';
+import { slideIn, jumpOut } from './animations';
 import logo from './images/awaymoFullWhite.svg';
 
-// 
-const animationTime = 1000;
+// helper variables
+const animationTime = 750; // ms
 
+const OpenMenuButton = styled.div`
+  font-size: 2rem;
+  padding: 10px;
+  cursor: pointer;
+`
+
+/**
+ * Main container styles
+ */
 const StyledMenu = styled.div`
   position: fixed;
   top: -100%;
@@ -39,7 +49,7 @@ const StyledMenu = styled.div`
   }
   
   &.slide-enter {
-    animation: ${slideIn} infinite ${animationTime}ms ease-out;
+    animation: ${slideIn} infinite ${animationTime}ms ease;
   }
   
   &.slide-enter-done {
@@ -49,8 +59,8 @@ const StyledMenu = styled.div`
   &.slide-exit {
     display: grid;
     
-    animation: ${slideIn} infinite ${animationTime}ms ease-in;
-    animation-direction: reverse;
+    animation: ${jumpOut} infinite ${animationTime}ms ease;
+    /* animation-direction: reverse; */
   }
   
   &.slide-exit-done {
@@ -69,6 +79,9 @@ const StyledMenu = styled.div`
   }
 `
 
+/**
+ * MenuHeader
+ */
 const Header = styled.div`
   grid-area: header;
   
@@ -117,6 +130,9 @@ class MenuHeader extends Component {
   }
 }
 
+/**
+ * MenuFooter
+ */
 const Footer = styled.div`
   grid-area: footer;
   padding: 20px 0 5px 0;
@@ -138,12 +154,6 @@ const Footer = styled.div`
   }
 `
 
-const OpenMenuButton = styled.div`
-  font-size: 2rem;
-  padding: 10px;
-  cursor: pointer;
-`
-
 class MenuFooter extends Component {
   render() {
     const contactUsLabel = `We're here to help`; // possible translation change here?
@@ -160,6 +170,9 @@ class MenuFooter extends Component {
   }
 }
 
+/**
+ * MenuListItem
+ */
 const MenuListItemStyled = styled.div`
   padding: 15px 0;
   
@@ -213,6 +226,9 @@ class MenuListItem extends Component {
   }
 }
 
+/**
+ * MenuList
+ */
 const MenuListStyled = styled.div`
   grid-area: ${props => props.type === 'sub' ? 'submenu' : 'menu'};
   margin: 0 20px;
@@ -231,13 +247,13 @@ const MenuListStyled = styled.div`
 class MenuList extends Component {
   render() {
     const menuListItems = [
-      { name: 'home', label: 'Home', link: '#', icon: '', group: 1, order: { tablet: -1, desktop: 0 } },
-      { name: 'flights', label: 'Flights', link: '#', icon: '', group: 1, order: { tablet: -1, desktop: 0 } },
+      { name: 'home', label: 'Home', link: '#', icon: '', group: 1, order: { tablet: -1, desktop: 1 } },
+      { name: 'flights', label: 'Flights', link: '#', icon: '', group: 1, order: { tablet: -1, desktop: 2 } },
       
-      { name: 'about', label: 'About Us', link: '#', icon: 'fa-question-circle', group: 2, order: { tablet: 6, desktop: 0 } },
-      { name: 'faq', label: 'FAQ', link: '#', icon: 'fa-info-circle', group: 2, order: { tablet: 7, desktop: 0 } },
-      { name: 'support', label: 'Support', link: '#', icon: 'fa-life-ring', group: 2, order: { tablet: 3, desktop: 0 } },
-      { name: 'contact', label: 'Contact Us', link: '#', icon: 'fa-phone', group: 2, order: { tablet: 4, desktop: 0 } },
+      { name: 'about', label: 'About Us', link: '#', icon: 'fa-question-circle', group: 2, order: { tablet: 6, desktop: 3 } },
+      { name: 'faq', label: 'FAQ', link: '#', icon: 'fa-info-circle', group: 2, order: { tablet: 7, desktop: 4} },
+      { name: 'support', label: 'Support', link: '#', icon: 'fa-life-ring', group: 2, order: { tablet: 3, desktop: 5 } },
+      { name: 'contact', label: 'Contact Us', link: '#', icon: 'fa-phone', group: 2, order: { tablet: 4, desktop: 6 } },
       
       { name: 'profile', label: 'Profile', link: '#', icon: 'fa-user-circle', group: 3, order: { tablet: 0, desktop: -1 } },
       { name: 'bookings', label: 'My Bookings', link: '#', icon: 'fa-plane', group: 3, order: { tablet: 1, desktop: -1 } },
@@ -247,11 +263,11 @@ class MenuList extends Component {
     ];
     
     const subMenuListItems = [
-      { name: 'profile', label: 'Profile', link: '#', icon: 'fa-user-circle', group: 3, order: { tablet: -1, desktop: 0 } },
-      { name: 'bookings', label: 'My Bookings', link: '#', icon: 'fa-plane', group: 3, order: { tablet: -1, desktop: 0 } },
-      { name: 'payments', label: 'My Payments', link: '#', icon: 'fa-credit-card', group: 3, order: { tablet: -1, desktop: 0 } },
-      { name: 'logout', label: 'Log Out', link: '#', icon: 'fa-sign-out-alt', group: 3, order: { tablet: -1, desktop: 0 } },
-      { name: 'resume', label: 'Resume Application', link: '#', icon: '', group: 3, order: { tablet: -1, desktop: 0 } }
+      { name: 'profile', label: 'Profile', link: '#', icon: 'fa-user-circle', group: 3, order: { tablet: -1, desktop: 7 } },
+      { name: 'bookings', label: 'My Bookings', link: '#', icon: 'fa-plane', group: 3, order: { tablet: -1, desktop: 8 } },
+      { name: 'payments', label: 'My Payments', link: '#', icon: 'fa-credit-card', group: 3, order: { tablet: -1, desktop: 9 } },
+      { name: 'logout', label: 'Log Out', link: '#', icon: 'fa-sign-out-alt', group: 3, order: { tablet: -1, desktop: 10 } },
+      { name: 'resume', label: 'Resume Application', link: '#', icon: '', group: 3, order: { tablet: -1, desktop: 11 } }
     ]
     
     const list = this.props.type === 'sub' ? subMenuListItems : menuListItems;
@@ -267,6 +283,7 @@ class MenuList extends Component {
   }
 }
 
+// Main component
 class Menu extends Component {
   constructor(props) {
     super(props);
@@ -275,10 +292,30 @@ class Menu extends Component {
     }
     
     this.toggleVisibility = this.toggleVisibility.bind(this);
+    
+    // event functions
+    this._handleKeyDown = this._handleKeyDown.bind(this);
+  }
+  
+  _handleKeyDown(event) {
+    switch (event.keyCode) {
+      case 27: // escape key
+        this.setState({visible: false});
+        document.removeEventListener('keydown', this._handleKeyDown);
+        break;
+      default:
+        break;
+    }
   }
   
   toggleVisibility() {
-    this.setState({visible: !this.state.visible})
+    this.setState({visible: !this.state.visible});
+    
+    if(!this.state.visible === true) {
+      document.addEventListener('keydown', this._handleKeyDown);
+    } else {
+      document.removeEventListener('keydown', this._handleKeyDown);
+    }
   }
 
   render() {
@@ -287,7 +324,7 @@ class Menu extends Component {
         <OpenMenuButton onClick={this.toggleVisibility}><i className="fas fa-bars"></i></OpenMenuButton>
         <CSSTransition
           in={this.state.visible}
-          timeout={1000}
+          timeout={animationTime}
           classNames="slide"
         >
             <StyledMenu visible={this.state.visible}>
@@ -303,6 +340,4 @@ class Menu extends Component {
   }
 }
 
-export default Menu; 
-
-// 
+export default Menu;

@@ -20,12 +20,13 @@ const UserInfoStyled = styled.div`
   }
 `
 
-const UserInfoAvatart = styled.div`
+const UserInfoDetails = styled.div``;
 
+const UserInfoAvatart = styled.div`
   display: inline-flex;
   border-radius: 50%;
   padding: 5px;
-  background: #fff;
+  background: #FFF;
   
   img {
     width: 35px;
@@ -44,10 +45,6 @@ const UserInfoAvatart = styled.div`
       height: 25px;
     }
   }
-`
-
-const UserInfoDetails = styled.div`
-  
 `
 
 const UserInfoName = styled.div`
@@ -116,11 +113,10 @@ class UserInfo extends Component {
     const balanceLabel = `Available Balance`;
     const balanceLabelShort = `Available`;
     
-    
     return (
       <UserInfoStyled>
         <UserInfoAvatart>
-          <img src={this.state.avatar} />
+          <img src={this.state.avatar} alt="avatar"/>
         </UserInfoAvatart>
         <UserInfoDetails>
           <UserInfoName><span>{this.state.name}</span>&nbsp;<span>{this.state.surname}</span></UserInfoName>
