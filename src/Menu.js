@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import UserInfo from './UserInfo';
 
 // utilities
-import { sizes, theme } from './utils';
+import { sizes, theme, getMenuItems } from './utils';
 import { slideIn, jumpOut } from './animations';
 import logo from './images/awaymoFullWhite.svg';
 
@@ -239,32 +239,16 @@ const MenuListStyled = styled.div`
 `
 
 class MenuList extends Component {
-  render() {
-    const menuListItems = [
-      { name: 'home', label: 'Home', link: '#', icon: '', group: 1, order: { tablet: -1, desktop: 1 } },
-      { name: 'flights', label: 'Flights', link: '#', icon: '', group: 1, order: { tablet: -1, desktop: 2 } },
-      
-      { name: 'about', label: 'About Us', link: '#', icon: 'fa-question-circle', group: 2, order: { tablet: 6, desktop: 3 } },
-      { name: 'faq', label: 'FAQ', link: '#', icon: 'fa-info-circle', group: 2, order: { tablet: 7, desktop: 4} },
-      { name: 'support', label: 'Support', link: '#', icon: 'fa-life-ring', group: 2, order: { tablet: 3, desktop: 5 } },
-      { name: 'contact', label: 'Contact Us', link: '#', icon: 'fa-phone', group: 2, order: { tablet: 4, desktop: 6 } },
-      
-      { name: 'profile', label: 'Profile', link: '#', icon: 'fa-user-circle', group: 3, order: { tablet: 0, desktop: -1 } },
-      { name: 'bookings', label: 'My Bookings', link: '#', icon: 'fa-plane', group: 3, order: { tablet: 1, desktop: -1 } },
-      { name: 'payments', label: 'My Payments', link: '#', icon: 'fa-credit-card', group: 3, order: { tablet: 2, desktop: -1 } },
-      { name: 'logout', label: 'Log Out', link: '#', icon: 'fa-sign-out-alt', group: 3, order: { tablet: 5, desktop: -1 } },
-      { name: 'resume', label: 'Resume Application', link: '#', icon: '', group: 3, order: { tablet: -1, desktop: -1 } }
-    ];
+  constructor() {
+    super();
+    const {menuListItems, subMenuListItems} = getMenuItems();
     
-    const subMenuListItems = [
-      { name: 'profile', label: 'Profile', link: '#', icon: 'fa-user-circle', group: 3, order: { tablet: -1, desktop: 7 } },
-      { name: 'bookings', label: 'My Bookings', link: '#', icon: 'fa-plane', group: 3, order: { tablet: -1, desktop: 8 } },
-      { name: 'payments', label: 'My Payments', link: '#', icon: 'fa-credit-card', group: 3, order: { tablet: -1, desktop: 9 } },
-      { name: 'logout', label: 'Log Out', link: '#', icon: 'fa-sign-out-alt', group: 3, order: { tablet: -1, desktop: 10 } },
-      { name: 'resume', label: 'Resume Application', link: '#', icon: '', group: 3, order: { tablet: -1, desktop: 11 } }
-    ]
-    
-    const list = this.props.type === 'sub' ? subMenuListItems : menuListItems;
+    this.menuListItems = menuListItems;
+    this.subMenuListItems = subMenuListItems;
+  }
+  
+  render() {    
+    const list = this.props.type === 'sub' ? this.subMenuListItems : this.menuListItems;
 
     return (
       <MenuListStyled type={this.props.type}>
