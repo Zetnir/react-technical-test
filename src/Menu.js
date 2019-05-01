@@ -18,24 +18,24 @@ const animationTime = 750; // ms
  * Main container styles
  */
 const StyledMenu = styled.div`
+  display: ${props => (props.visible) ? `grid` : `none` };
+  grid-template-rows: max-content;
+  grid-template-columns: auto;
+  grid-template-areas: 
+  "header"
+  "user"
+  "menu"
+  "footer";
+  
   position: fixed;
   top: -100%;
   
-  display: ${props => (props.visible) ? `grid` : `none` };
   width: 100%;
-  min-width: 330px;
+  min-width: 300px;
   height: 100%;
 
   color: ${theme.color.text};
   background: ${theme.color.main};
-
-  grid-template-rows: max-content;
-  grid-template-columns: auto;
-  grid-template-areas: 
-    "header"
-    "user"
-    "menu"
-    "footer";
   
   a {
     color: ${theme.color.text}
@@ -117,8 +117,8 @@ class MenuHeader extends Component {
     return (
       <Header>
         <div />
-        <img src={logo} alt="logo"/>
-        <i onClick={this.handleClick} className="fas fa-times"></i>
+        <img src={logo} alt="logo" />
+        <i onClick={this.handleClick} className="fas fa-times" />
       </Header>
     )
   }
