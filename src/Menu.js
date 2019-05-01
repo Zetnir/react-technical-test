@@ -14,12 +14,6 @@ import logo from './images/awaymoFullWhite.svg';
 // helper variables
 const animationTime = 750; // ms
 
-const OpenMenuButton = styled.div`
-  font-size: 2rem;
-  padding: 10px;
-  cursor: pointer;
-`
-
 /**
  * Main container styles
  */
@@ -116,7 +110,7 @@ class MenuHeader extends Component {
   }
   
   handleClick() {
-    this.props.toggleVisibility();
+    this.props.store.dispatch({ type: 'MENU_CLOSE' });
   }
 
   render() {
@@ -287,55 +281,59 @@ class MenuList extends Component {
 class Menu extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       visible: false
     }
-    
-    this.toggleVisibility = this.toggleVisibility.bind(this);
-    
+
     // event functions
     this._handleKeyDown = this._handleKeyDown.bind(this);
+  }
+  
+  componentDidMount() {
+    const store = this.props.store;
+    
+    // Redux Store Subscribe
+    store.subscribe(() => {
+      this.setState({
+        visible: store.getState().menuApp.menuState.visible
+      });
+      
+      if(store.getState().menuApp.menuState.visible) {
+        document.addEventListener('keydown', this._handleKeyDown);        
+        return
+      }
+      
+      document.removeEventListener('keydown', this._handleKeyDown);
+    });
   }
   
   _handleKeyDown(event) {
     switch (event.keyCode) {
       case 27: // escape key
-        this.setState({visible: false});
+        this.props.store.dispatch({ type: 'MENU_CLOSE' });
         document.removeEventListener('keydown', this._handleKeyDown);
         break;
       default:
         break;
     }
   }
-  
-  toggleVisibility() {
-    this.setState({visible: !this.state.visible});
-    
-    if(!this.state.visible === true) {
-      document.addEventListener('keydown', this._handleKeyDown);
-    } else {
-      document.removeEventListener('keydown', this._handleKeyDown);
-    }
-  }
 
   render() {
     return (
-      <div>
-        <OpenMenuButton onClick={this.toggleVisibility}><i className="fas fa-bars"></i></OpenMenuButton>
         <CSSTransition
           in={this.state.visible}
           timeout={animationTime}
           classNames="slide"
         >
             <StyledMenu visible={this.state.visible}>
-              <MenuHeader toggleVisibility={this.toggleVisibility}/>
+              <MenuHeader store={this.props.store} />
               <UserInfo />
               <MenuList />
               <MenuList type={'sub'}/>
               <MenuFooter />
             </StyledMenu>
         </CSSTransition>
-      </div>
     )
   }
 }
