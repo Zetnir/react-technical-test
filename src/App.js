@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import { store } from './store/store';
+import { connect } from "react-redux";
+import { openMenu, closeMenu } from './store/menu.actions';
 
 import Menu from './Menu';
+
+import './App.css';
 
 const OpenMenuButtonStyled = styled.div`
   font-size: 2rem;
@@ -19,10 +22,7 @@ class OpenMenuButton extends Component {
   }
   
   handleClick() {
-    const store = this.props.store;    
-    const dispatchType = (store.getState().menuApp.menuState.visible) ? 'MENU_CLOSE' : 'MENU_OPEN';
-
-    store.dispatch({type: dispatchType});
+    this.props.onOpenMenu();
   }
 
   render() {
@@ -34,11 +34,22 @@ class OpenMenuButton extends Component {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    onOpenMenu: () => { dispatch(openMenu()); }
+  }
+}
+
+OpenMenuButton = connect(
+  null,
+  mapDispatchToProps
+)(OpenMenuButton);
+
 function App() {
   return (
     <div>
-      <OpenMenuButton store={store} />
-      <Menu store={store} />
+      <OpenMenuButton />
+      <Menu />
     </div>
   );
 }

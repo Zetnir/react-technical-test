@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { MENU_OPEN, MENU_CLOSE } from './menu.actions';
+import { MENU_OPEN, MENU_CLOSE } from './menu.actionTypes';
 
 function menuState(state = { visible: false }, action) {
   switch(action.type) {

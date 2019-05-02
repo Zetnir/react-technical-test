@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import styled from 'styled-components';
 
+import { connect } from 'react-redux';
+import { openMenu, closeMenu } from './store/menu.actions';
+
 // internal components
 import UserInfo from './UserInfo';
 
@@ -19,7 +22,7 @@ const animationTime = 750; // ms
  */
 const StyledMenu = styled.div`
   display: ${props => (props.visible) ? `grid` : `none` };
-  grid-template-rows: max-content;
+  grid-template-rows: max-content min-content auto auto;
   grid-template-columns: auto;
   grid-template-areas: 
   "header"
@@ -54,7 +57,6 @@ const StyledMenu = styled.div`
     display: grid;
     
     animation: ${jumpOut} infinite ${animationTime}ms ease;
-    /* animation-direction: reverse; */
   }
   
   &.slide-exit-done {
@@ -62,8 +64,8 @@ const StyledMenu = styled.div`
   }
   
   @media (min-width: ${sizes.tablet}px) {
-    grid-gap: 15px;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-gap: 20px;
+    grid-template-columns: .8fr 1fr 1fr;
     grid-template-rows: max-content max-content 1fr 3fr;
     grid-template-areas: 
       "header header header"
@@ -83,65 +85,85 @@ const Header = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  padding: 15px 0;
-  margin: 0 15px;
+  padding: 24.5px 0;
+  margin: 0 20px;
 
   border-bottom: 1px solid ${theme.color.borderDim};
 
+  div:before {
+    font-family: "Font Awesome 5 Free";
+    font-size: 1.2rem;
+    font-weight: 900;
+    content: "\f00d";
+    visibility: hidden;
+  }
+
   img {
-    height: 25px;
+    height: 31px;
     margin-right: -38px;
   }
 
   i {
-    cursor: pointer;
     font-size: 1.2rem;
+    cursor: pointer;
   }
   
   @media (min-width: ${sizes.tablet}px) {
-    border-bottom: 3px solid ${theme.color.border};
+    padding: 19px 0;
+    margin: 0 16px;
+    
+    border-bottom: 2px solid ${theme.color.border};
+    
+    img {
+      height: 26px;
+      margin-right: -38px;
+    }
   }
 `
 
 class MenuHeader extends Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
-  
-  handleClick() {
-    this.props.store.dispatch({ type: 'MENU_CLOSE' });
-  }
-
   render() {
     return (
       <Header>
         <div />
         <img src={logo} alt="logo" />
-        <i onClick={this.handleClick} className="fas fa-times" />
+        <i onClick={this.props.onCloseMenu.bind(this)} className="fas fa-times" />
       </Header>
     )
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onCloseMenu: () => { 
+      dispatch(closeMenu());
+    }
+  }
+}
+
+MenuHeader = connect(
+  null,
+  mapDispatchToProps
+)(MenuHeader);
 
 /**
  * MenuFooter
  */
 const Footer = styled.div`
   grid-area: footer;
-  padding: 20px 0 5px 0;
+  padding: 21px 0 7px 0;
   margin: 0 20px;
   
   border-top: 1px solid ${theme.color.borderDim}
   
   text-align: center;
-  font-size: 1.35rem;
+  font-size: 1.5rem;
   align-self: end;
   
   .menu--footer__contact-data { display: none; }
   
   @media (min-width: ${sizes.tablet}px) {
-    font-size: 1.15rem;
+    font-size: 1.2rem;
     padding: 15px 0 50px 0;
 
     .menu--footer__contact-data { display: block; }
@@ -168,7 +190,7 @@ class MenuFooter extends Component {
  * MenuListItem
  */
 const MenuListItemStyled = styled.div`
-  padding: 15px 0;
+  padding: 22.5px 0;
   
   display: ${props => props.order.tablet === -1 ? 'none' : 'flex'};
   align-items: center;
@@ -176,14 +198,15 @@ const MenuListItemStyled = styled.div`
   
   border-top: 1px solid ${theme.color.borderDim};
   
+  font-size: 1.3rem;
+  
   i {
-    font-size: 1.1rem;
+    font-size: 1.35rem;
     margin-right: 10px;
   }
   
   /* first item has no border*/
   &.menu-item__name-profile {
-    padding-top: 0;
     border-top-width: 0;
   }
   
@@ -194,7 +217,8 @@ const MenuListItemStyled = styled.div`
     
     order: ${props => props.order.desktop};
     
-    font-size: 1.35rem;
+    font-size: 1.75rem;
+    font-weight: 900;
     
     i {
       display: none;
@@ -227,12 +251,13 @@ const MenuListStyled = styled.div`
   grid-area: ${props => props.type === 'sub' ? 'submenu' : 'menu'};
   margin: 0 20px;
   
-  display: ${props => props.type === 'sub' ? 'none' : 'flex'}
+  display: ${props => props.type === 'sub' ? 'none' : 'flex'};
   flex-direction: column;
   
   @media (min-width: ${sizes.tablet}px) {
-    display: ${props => props.type === 'sub' && 'flex'}
-    margin: 0;
+    display: ${props => props.type === 'sub' && 'flex'};
+    margin-left: 0;
+    margin-left: ${props => props.type !== 'sub' && '16px'};
     
     font-weight: 500;
   }
@@ -266,37 +291,21 @@ class Menu extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      visible: false
-    }
-
     // event functions
     this._handleKeyDown = this._handleKeyDown.bind(this);
   }
   
   componentDidMount() {
-    const store = this.props.store;
-    
-    // Redux Store Subscribe
-    store.subscribe(() => {
-      this.setState({
-        visible: store.getState().menuApp.menuState.visible
-      });
-      
-      if(store.getState().menuApp.menuState.visible) {
-        document.addEventListener('keydown', this._handleKeyDown);        
-        return
-      }
-      
-      document.removeEventListener('keydown', this._handleKeyDown);
-    });
+    document.addEventListener('keydown', this._handleKeyDown);
   }
   
   _handleKeyDown(event) {
+
+    if(this.props.visible === false) return;
+
     switch (event.keyCode) {
       case 27: // escape key
-        this.props.store.dispatch({ type: 'MENU_CLOSE' });
-        document.removeEventListener('keydown', this._handleKeyDown);
+        this.props.onCloseMenu();
         break;
       default:
         break;
@@ -306,12 +315,12 @@ class Menu extends Component {
   render() {
     return (
         <CSSTransition
-          in={this.state.visible}
+          in={this.props.visible}
           timeout={animationTime}
           classNames="slide"
         >
-            <StyledMenu visible={this.state.visible}>
-              <MenuHeader store={this.props.store} />
+            <StyledMenu visible={this.props.visible}>
+              <MenuHeader />
               <UserInfo />
               <MenuList />
               <MenuList type={'sub'}/>
@@ -322,4 +331,17 @@ class Menu extends Component {
   }
 }
 
-export default Menu;
+const getMenuVisibility = (visible) => {
+  return visible;
+}
+
+const mapStateToProps = state => {
+  return {
+    visible: getMenuVisibility(state.menuApp.menuState.visible)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Menu);

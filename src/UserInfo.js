@@ -5,12 +5,12 @@ import { theme, sizes, formatMoney, getUserData } from './utils';
 
 const UserInfoStyled = styled.div`
   grid-area: user;
-  padding-top: 30px;
+  padding-top: 32px;
   text-align: center;
   
   @media (min-width: ${sizes.tablet}px) {
     padding: 0 0 10px 0;
-    border-bottom: 1px solid ${theme.color.border};
+    border-bottom: 1px solid ${theme.color.borderDim};
     text-align: left;
     
     display: grid;
@@ -25,12 +25,13 @@ const UserInfoDetails = styled.div``;
 const UserInfoAvatart = styled.div`
   display: inline-flex;
   border-radius: 50%;
-  padding: 5px;
+  padding: 6px;
+  margin-bottom: 3px;
   background: #FFF;
   
   img {
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
   }
   
   @media (min-width: ${sizes.tablet}px) {
@@ -39,22 +40,22 @@ const UserInfoAvatart = styled.div`
     img {
       border: 1.5px solid ${theme.color.main};
       border-radius: 50%;
-      padding: 8px;
+      padding: 11px;
       
-      width: 25px;
-      height: 25px;
+      width: 30px;
+      height: 30px;
     }
   }
 `
 
 const UserInfoName = styled.div`
-  font-size: 1.15rem;
+  font-size: 1.5rem;
   font-weight: 400;
   
   span:last-child { display: none; }
   
   @media (min-width: ${sizes.tablet}px) {
-    font-size: 1rem;
+    font-size: 1.4rem;
     font-weight: 500;
     
     span:last-child { display: inline; }
@@ -63,11 +64,11 @@ const UserInfoName = styled.div`
 
 const UserInfoBalance = styled.div`
   div:first-child {
-    /* font-size: 1rem; */
+    font-size: 1.15rem;
   }
   
   .user-info__balance {
-    font-size: 1.1rem;
+    font-size: 1.4rem;
     font-weight: 400;
   }
   
@@ -86,7 +87,7 @@ const UserInfoBalance = styled.div`
     
     div:last-child,
     .user-info__balance {
-      font-size: 1rem;
+      font-size: 1.35rem;
       font-weight: 500;
     }
   }
